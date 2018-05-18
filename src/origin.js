@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { OriginConsumer } from './expandableContent';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 
 class Origin extends React.PureComponent {
 
@@ -27,6 +27,11 @@ class Origin extends React.PureComponent {
     });
   }
 
+  _onPress = () => {
+    this.props.onPress();
+    this.reveal();
+  };
+
   render() {
     const { children, style, id, ...props } = this.props;
     const { context: { reveal, originId } }       = this.state;
@@ -35,18 +40,19 @@ class Origin extends React.PureComponent {
       <View
         style={ [
           style,
-          { opacity: reveal && originId === id ? 0 : 1 }
+          { opacity: reveal && originId === id ? 0 : 1 },
         ] }
-        { ...props }
       >
         <OriginConsumer>
           { (context) => this.setState({ context }) }
         </OriginConsumer>
-        {
-          React.cloneElement(children, {
-            ref: ref => this.ref = ref
-          })
-        }
+        <TouchableOpacity
+          ref={ ref => this.ref = ref }
+          { ...props }
+          onPress={ this._onPress }
+        >
+          { children }
+        </TouchableOpacity>
       </View>
     );
   }

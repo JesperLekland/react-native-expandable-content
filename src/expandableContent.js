@@ -45,6 +45,8 @@ class ExpandableContent extends React.PureComponent {
             originId,
           } = this.state;
 
+    console.log('state', this.state);
+
     return (
       <TargetProvider
         value={ {

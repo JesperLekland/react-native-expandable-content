@@ -173,7 +173,6 @@ class Target extends React.Component {
       >
         <View
           style={ StyleSheet.absoluteFill }
-          // pointerEvents={ reveal ? 'auto' : 'none' }
         >
           <View
             style={ [
@@ -200,7 +199,8 @@ class Target extends React.Component {
                   // contentContainerStyle,
                   {
                     position: 'absolute',
-
+                    //to avoid flicker on first measure
+                    opacity: layout.x === undefined ? 0 : 1,
                     left: leftInterpolator,
                     top: yInterpolator,
                     shadowOpacity: shadowOpacityInterpolator,
@@ -211,9 +211,7 @@ class Target extends React.Component {
                     shadowColor: shadowColorInterpolator,
                     shadowRadius: shadowRadiusInterpolator,
                     elevation: elevationInterpolator,
-                    // elevation: 4,
                     borderRadius: _targetStyle.borderRadius,
-                    // borderWidth: 1,
                   },
                 ] }
               >
