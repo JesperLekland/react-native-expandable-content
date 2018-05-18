@@ -5,9 +5,8 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, View, TouchableOpacity, ScrollView} from 'react-native';
-import ExpandableContent from "./foo";
-import Bar from "./bar";
+import { Platform, StyleSheet, View, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
+import ExpandableContent from './expandableContent';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -22,38 +21,52 @@ export default class App extends Component<Props> {
     expanded: false,
   };
 
-  onClick = () => {
-    this.origin.reveal();
+  onClick = (number) => {
+    this[ `origin${number}` ].reveal();
   };
 
   render() {
     return (
-      <Bar
+      <ExpandableContent
         style={{flex: 1, justifyContent: 'center'}}
-        expanded={this.state.expanded}
       >
+        <StatusBar
+          translucent={ true }
+          backgroundColor={ 'transparent' }
+        />
         <ScrollView contentContainerStyle={{paddingTop: 300}}>
-          <Bar.Origin
-            ref={ref => this.origin = ref}
+          <ExpandableContent.Origin
+            id={'foo'}
+            ref={ ref => this.origin1 = ref }
             style={styles.origin}>
             <TouchableOpacity
-              style={{height: 200}}
-              onPress={this.onClick}
+              style={ { height: 200 } }
+              onPress={ () => this.onClick(1) }
             />
-          </Bar.Origin>
+          </ExpandableContent.Origin>
+          <ExpandableContent.Origin
+            ref={ ref => this.origin2 = ref }
+            style={ styles.origin }>
+            <TouchableOpacity
+              style={ { height: 200 } }
+              onPress={ () => this.onClick(2) }
+            />
+          </ExpandableContent.Origin>
         </ScrollView>
-        <Bar.Target
+        <ExpandableContent.Target
           style={{
             justifyContent: 'center',
-            margin: 10,
+            // margin: 10,
           }}
           contentContainerStyle={styles.target}
+          verticalOffset={ Platform.OS === 'android' ? StatusBar.currentHeight : 0 }
         >
           <View style={{
             height: 500,
+            backgroundColor: 'lightgrey',
           }}/>
-        </Bar.Target>
-      </Bar>
+        </ExpandableContent.Target>
+      </ExpandableContent>
     );
   }
 }
@@ -66,15 +79,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   origin: {
-    marginHorizontal: 10,
+    margin: 10,
     shadowOpacity: 0.5,
     shadowColor: 'black',
     shadowOffset: {
       height: 2,
       width: 2,
     },
-    borderWidth: 1,
+    shadowRadius: 3,
     borderRadius: 20,
+    elevation: 3,
     backgroundColor: 'lightgrey',
   },
   target: {
@@ -85,8 +99,9 @@ const styles = StyleSheet.create({
       height: 2,
       width: 2,
     },
+    margin: 10,
+    elevation: 20,
     backgroundColor: 'lightgrey',
-    borderWidth: 1,
     borderRadius: 20,
   },
   welcome: {
