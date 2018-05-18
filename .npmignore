@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+/android/
+/ios/
+.babelrc
+.buckconfig
+.flowconfig
+.gitattributes
+.gitignore
+.watchmanconfig
+App.js
+app.json
