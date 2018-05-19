@@ -5,20 +5,20 @@
 A nice, reusable component for creating expandable, interactive UIs.
 
 The library consists of three components
- * ExpandableContent
+ * **ExpandableContent**
 
     The root component that orchestrates the communication between the `Origin` and the `Target`
 
- * ExpandableContent.Origin
+ * **ExpandableContent.Origin**
 
     Used to wrap the "small component", adds an `onPress` property that is used to expand to the "big component"
 
- * ExpandableContent.Target
+ * **ExpandableContent.Target**
 
     Used to wrap the "big component", adds all the animation making sure that the "big component" takes the form of the "small component"
     and the morphs into the "big component", and back when closing.
 
-```
+```javascript
 return (
       <ExpandableContent>
         <ScrollView>
