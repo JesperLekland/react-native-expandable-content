@@ -17,34 +17,48 @@ const instructions = Platform.select({
   'Shake or press menu button for dev menu',
 });
 
-const IDIOTS = [
+const SUPER_HEROES = [
   {
-    id: 'trump',
-    image: 'https://pmcdeadline2.files.wordpress.com/2018/02/trump.jpg?w=446&h=299&crop=1',
-    title: 'I\'m so awesome, me gonna build very tall wall',
+    id: 'spiderman',
+    image: 'https://static.posters.cz/image/750/posters/spider-man-homecoming-hang-i48035.jpg',
+    title: 'Spiderman',
+    body: 'Spider-Man is a fictional superhero appearing in American comic books published by Marvel Comics. The character was created by writer-editor Stan Lee and writer-artist Steve Ditko, and first appeared in the anthology comic book Amazing Fantasy #15 (August 1962) in the Silver Age of Comic Books',
     trail: [
-      'Me so awesome',
-      'Me the biggest',
-      'Me the bestest',
+      'Spider sense',
+      'Super-human strength',
+      'Spider web',
     ],
   },
   {
-    id: 'Kim Jong Un',
-    image: 'https://media.newyorker.com/photos/5a7db87056b75c08a3e5b183/master/w_727,c_limit/Borowitz-Trumps-Worst-Hair-Day.jpg',
-    title: 'Much nuke such dictator',
+    id: 'Iron man',
+    image: 'https://vignette.wikia.nocookie.net/maa2/images/8/82/Ironman_CW_two-shot.png/revision/latest?cb=20160503124845',
+    title: 'Iron man',
+    body: 'A wealthy American business magnate, playboy, and ingenious scientist, Anthony Edward "Tony" Stark suffers a severe chest injury during a kidnapping in which his captors attempt to force him to build a weapon of mass destruction. He instead creates a powered suit of armor to save his life and escape captivity. Later, Stark augments his suit with weapons and other technological devices he designed through his company, Stark Industries.',
     trail: [
-      'You quite',
-      'You honor',
-      'You no go internet',
+      'Super-human healing',
+      'Super-human response time',
+      'Iron man suit',
+    ],
+  },
+  {
+    id: 'Thor',
+    image: 'https://vignette.wikia.nocookie.net/avengersalliance2/images/a/a0/Thor_AoU_1_unleash-mjolner.png/revision/latest?cb=20160413193836',
+    title: 'Thor',
+    body: 'Based on the Norse deity of the same name, is the Asgardian god of thunder and possesses the enchanted hammer Mjolnir, which grants him the ability to fly and manipulate weather amongst his other superhuman attributes.',
+    trail: [
+      'Strongest of the Asgardians',
+      'Almost invulnerable',
+      'Can summon the elements of the storm',
     ],
   }
+
 ];
 
 export default class App extends Component<Props> {
 
   state = {
     expanded: false,
-    idiot: {},
+    hero: {},
   };
 
   onClick = (number) => {
@@ -52,7 +66,7 @@ export default class App extends Component<Props> {
   };
 
   render() {
-    const { idiot } = this.state;
+    const {hero} = this.state;
     return (
       <ExpandableContent
         style={{flex: 1, justifyContent: 'center'}}
@@ -61,17 +75,19 @@ export default class App extends Component<Props> {
           translucent={ true }
           backgroundColor={ 'transparent' }
         />
-        <ScrollView contentContainerStyle={{paddingTop: 300}}>
-          { IDIOTS.map(idiot => (
+        <ScrollView
+          contentContainerStyle={{paddingVertical: 150}}
+          showsVerticalScrollIndicator={false}
+        >
+          {SUPER_HEROES.map(hero => (
             <ExpandableContent.Origin
-              key={ idiot.id }
-              id={ idiot.id }
+              key={hero.id}
+              id={hero.id}
               style={ styles.origin }
-              onPress={ () => this.setState({ idiot }) }
+              onPress={() => this.setState({hero})}
             >
               <SmallComponent
-                image={ idiot.image }
-                title={ idiot.title }
+                {...hero}
               />
             </ExpandableContent.Origin>
 
@@ -83,7 +99,7 @@ export default class App extends Component<Props> {
           verticalOffset={ Platform.OS === 'android' ? StatusBar.currentHeight : 0 }
         >
           <BigComponent
-            { ...idiot }
+            {...hero}
           />
         </ExpandableContent.Target>
       </ExpandableContent>
@@ -121,7 +137,7 @@ const styles = StyleSheet.create({
     },
     margin: 10,
     elevation: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#dddee2',
     borderRadius: 20,
   },
   welcome: {
